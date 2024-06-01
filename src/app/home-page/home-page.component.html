@@ -1,14 +1,40 @@
-<div class="flex flex-column text-center">
-  <span class="text-lg mb-4">Enter the ID of the employee</span>
+<div class="grid">
+  <div class="col-12 mt-5 md:col-6 md:col-offset-3 md:mt-8">
+    <div class="flex flex-column text-center">
+      <span class="text-lg mb-4">Enter the ID of the employee</span>
 
-  <mat-form-field>
-    <mat-label>Employee ID</mat-label>
-    <input matInput type="number" />
-  </mat-form-field>
+      <mat-form-field>
+        <mat-label>Employee ID</mat-label>
+        <input [formControl]="searchInput" matInput type="number" />
+      </mat-form-field>
 
-  <button mat-button mat-flat-button color="primary">
-    <mat-icon>search</mat-icon> Search
-  </button>
+      <button
+        mat-button
+        mat-flat-button
+        (click)="searchEmployee()"
+        color="primary"
+      >
+        <mat-icon>search</mat-icon> Search
+      </button>
+      <div class="mt-2">If you not put any number you get all employees</div>
 
-  <div class="mt-2">If you not put any number you get all employees</div>
+      @if (displayError) {
+      <div class="mt-4" style="color: #ff0000">
+        Data no updated, cause: {{ errorMessage }}
+      </div>
+      }
+    </div>
+  </div>
+
+  <table mat-table [dataSource]="employees" class="mat-elevation-z8 mt-4">
+    @for (column of displayedColumns; track column) {
+    <ng-container [matColumnDef]="column">
+      <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+      <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
+    </ng-container>
+    }
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
 </div>
