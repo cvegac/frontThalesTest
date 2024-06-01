@@ -66,6 +66,7 @@ export class HomePageComponent {
         },
         error: (e: HttpErrorResponse) => {
           console.log(e.error.message);
+          this.searchInput.setValue('');
           this.displayError = true;
           this.errorMessage = e.error.message;
         },
@@ -79,6 +80,7 @@ export class HomePageComponent {
         },
         error: (e: HttpErrorResponse) => {
           console.log(e.error.message);
+          this.searchInput.setValue('');
           this.displayError = true;
           this.errorMessage = e.error.message;
         },
